@@ -33,10 +33,16 @@ export default function Container() {
         <Route
           path="/quotes"
           render={() => (
-            <Spinner>
-              <Quotes />
-              <QuoteForm />
-            </Spinner>
+            localStorage.getItem('userToken')
+              ? (
+                <Spinner>
+                  <Quotes />
+                  <QuoteForm />
+                </Spinner>
+              )
+              : (
+                <Redirect to="/login" />
+              )
           )}
         />
 
