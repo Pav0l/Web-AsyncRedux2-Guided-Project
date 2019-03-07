@@ -5,6 +5,17 @@ import * as types from './actionTypes';
 // create an async action creator login, that takes username and password,
 // and hits the login api, and triggers a LOGIN_SUCCESS action with the userToken as payload.
 
+export const login = (username, password) => dispatch => {
+  dispatch(spinnerOn());
+  fetch(`http://gabe.mockable.io/quotes/login?username=${username}&password=${password}`, { method: 'GET' })
+    .then(res => res.json())
+    .then(data => {
+      dispatch({ type: types.LOGIN_SUCCESS, payload: data.userToken });
+      dispatch(spinnerOff());
+    });
+};
+
+
 export const deleteQuoteAsync = id => dispatch => {
   dispatch(spinnerOn());
   fetch(`http://gabe.mockable.io/quotes/${id}`, { method: 'DELETE' })
